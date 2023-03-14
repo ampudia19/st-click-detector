@@ -317,6 +317,24 @@ template {
 [hidden] {
   display: none !important;
 }
+.img-acu-1 {
+  object-position: -99999px 99999px;
+  background:transparent url("https://s2.gifyu.com/images/hs_homepage.png");
+  background-size: cover;
+}
+.img-acu-1:hover {
+  background-image: url("https://s2.gifyu.com/images/hs_homepage.gif");
+  background-size: cover;
+}
+.img-acu-2 {
+  object-position: -99999px 99999px;
+  background:transparent url("https://s10.gifyu.com/images/cm_homepage.png");
+  background-size: cover;
+}
+.img-acu-2:hover {
+  background-image: url("https://s10.gifyu.com/images/cm_homepage.gif");
+  background-size: cover;
+}
 .h1,
 .h2,
 .h3,
