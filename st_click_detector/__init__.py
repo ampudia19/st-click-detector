@@ -1,6 +1,6 @@
-import os
+import os, re
 import streamlit.components.v1 as components
-
+from pathlib import Path
 _RELEASE = True
 
 if not _RELEASE:
@@ -30,6 +30,36 @@ def click_detector(html_content, key=None):
     component_value = _component_func(html_content=html_content, key=key, default="",)
 
     return component_value
+
+
+def create_hover_class(label: str, png_url: str, gif_url: str) -> None:
+    with open(f"{build_dir}/bootstrap.min.css", "r") as f:
+        css = f.read()
+
+    str_default = re.findall('(?=(?s)\n.%s)((?s).*})' % label, css, re.M)
+    str_hover = re.findall('(?=(?s)\n.%s:hover)((?s).*})' % label, css, re.M)
+
+    if all([len(str_default) > 0, len(str_hover) > 0]):
+        css = css.replace(str_default[0], "")
+        css = css.replace(str_hover[0], "")
+
+    s = (
+        "\n" \
+        f".{label} {{\n  " \
+        "object-position: -99999px 99999px;\n  " \
+        f"background:transparent url('{png_url}');\n  " \
+        "background-size: cover;\n" \
+        "}\n" \
+        f".{label}:hover {{\n  " \
+        f"background-image: url('{gif_url}');\n  " \
+        "background-size: cover;\n" \
+        "}"
+    )
+
+    css = css + s
+
+    with open(f"{build_dir}/bootstrap.min.css", "w") as f:
+        f.write(css)
 
 
 if not _RELEASE:
